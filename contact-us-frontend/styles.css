@@ -555,10 +555,19 @@ main {
 
 /* Service Detail Pages */
 .service-detail {
-    padding: 4rem 0;
+    padding: 4rem 1rem;
     background: white;
     border-radius: 15px;
-    margin: 2rem 0;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-detail-content {
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
 }
 
 .back-button {
@@ -587,11 +596,14 @@ main {
 .service-detail-content h3 {
     color: #3498db;
     margin-bottom: 1.5rem;
+    font-weight: normal;
 }
 
 .service-detail-content ul {
     list-style: none;
     padding: 0;
+    text-align: left; /* Optional: keeps bullets aligned left */
+    margin-top: 1.5rem;
 }
 
 .service-detail-content li {
@@ -608,7 +620,6 @@ main {
     color: #3498db;
     font-weight: bold;
 }
-
 /* Footer */
 footer {
     background: #2c3e50;
