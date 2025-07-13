@@ -4,133 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaizen Repair - Professional IT Services</title>
-    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="styles.css" />
+
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <a href="#" class="logo">Kaizen Repair</a>
-            <ul class="nav-links">
-                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
-                <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
-                <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
-            </ul>
-        </nav>
+    <!-- Top Info Bar -->
+    <div class="top-info">
+        <div class="container">
+            <div class="top-info-content">
+                <div class="address">
+                    <span>🏠</span>
+                    <span>3530 w willow ave</span>
+                </div>
+                <div class="social-links">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">TP</div>
+                    <div>
+                        <div class="logo-text">KAIZEN REPAIR</div>
+                        <div class="logo-tagline">Professional IT Service</div>
+                    </div>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h4>CONTACT US</h4>
+                        <p>(954) 367-5151</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>STORE HOURS</h4>
+                        <p>Mon - Fri: 10am - 6pm</p>
+                    </div>
+                    <a href="#" class="cta-button" onclick="showPage('contact')">GET STARTED NOW</a>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main class="container">
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-page="home">HOME</a></li>
+                <li><a href="#" class="nav-link" data-page="about">ABOUT US</a></li>
+                <li><a href="#" class="nav-link" id="services-link">OUR SERVICES</a></li>
+
+                <li><a href="#" class="nav-link" data-page="contact">CONTACT US</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
         <!-- Home Page -->
         <div id="home" class="page active">
-            <section class="hero">
-                <h1>Professional IT Services</h1>
-                <p>Comprehensive technology solutions for your business needs</p>
-                <a href="#" class="cta-button" onclick="showPage('contact')">Get Started Today</a>
+            <!-- Hero Carousel Section -->
+            <section class="hero-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide active">
+                        <img src="images/slide1.jpg" alt="Computer Repair" class="slide-image">
+                        <div class="carousel-content">
+                            <h1>Professional Computer Repair</h1>
+                            <p>Expert diagnosis and repair services for all your computer needs</p>
+                            <a href="#" class="cta-button" onclick="showPage('contact')">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80" alt="Mobile Device Repair" class="slide-image">
+                        <div class="carousel-content">
+                            <h1>Mobile Device Specialists</h1>
+                            <p>iPhone, Android, and tablet repair services with same-day turnaround</p>
+                            <a href="#" class="cta-button" onclick="showPage('contact')">Get Estimate</a>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2944&q=80" alt="Network Solutions" class="slide-image">
+                        <div class="carousel-content">
+                            <h1>Network & IT Solutions</h1>
+                            <p>Complete network setup, WiFi optimization, and IT support services</p>
+                            <a href="#" class="cta-button" onclick="showPage('contact')">Schedule Service</a>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2815&q=80" alt="Web Design" class="slide-image">
+                        <div class="carousel-content">
+                            <h1>Web Design & SEO</h1>
+                            <p>Professional websites that rank high and convert visitors into customers</p>
+                            <a href="#" class="cta-button" onclick="showPage('contact')">Get Quote</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-arrow prev" onclick="previousSlide()">❮</button>
+                <button class="carousel-arrow next" onclick="nextSlide()">❯</button>
+                
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" onclick="currentSlide(0)"></div>
+                    <div class="carousel-dot" onclick="currentSlide(1)"></div>
+                    <div class="carousel-dot" onclick="currentSlide(2)"></div>
+                    <div class="carousel-dot" onclick="currentSlide(3)"></div>
+                </div>
             </section>
 
-            <section class="services">
-                <h2>Our Services</h2>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">🖥️</div>
-                        <h3>Computer Repair</h3>
-                        <p>Tech Pro Repair team provides the full range of PC repair services, including but not limited by...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('computer-repair')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🍎</div>
-                        <h3>Apple Repair</h3>
-                        <p>Our team of certified Technicians offers high quality repair service, fast and at a great price...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('apple-repair')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🦠</div>
-                        <h3>Virus Removal</h3>
-                        <p>The most common reason for a compromised work of a device is a virus/spyware...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('virus-removal')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🛠️</div>
-                        <h3>IT Support</h3>
-                        <p>Not a single business can exist without technology nowadays. And whether you are a law firm...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('it-support')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">⚡</div>
-                        <h3>Computer Hardware Upgrade</h3>
-                        <p>Technology changes and develops as fast as never before, and even the most advanced computer...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('hardware-upgrade')">Continue Reading</a>
-                    </div>
-                    
-
-                    <div class="service-card">
-                        <div class="service-icon">📱</div>
-                        <h3>iPhone Repair</h3>
-                        <p>Something happened to your iPhone? Tech Pro Repair got you covered! Just call us to schedule...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('iphone-repair')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">📲</div>
-                        <h3>Cellphone Repair</h3>
-                        <p>We repair all major cell phone brands like Samsung, HTC, ZTE, Asus, LG and many more...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('cellphone-repair')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">📺</div>
-                        <h3>iPad Repair</h3>
-                        <p>We provide all kinds of services for various models and generations of iPads out there...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('ipad-repair')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">💻</div>
-                        <h3>Tablet Repair</h3>
-                        <p>We provide solutions for all common issues with all major tablet brands. Whether it's hardware...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('tablet-repair')">Continue Reading</a>
-                    </div>
-                    
-
-
-                    
-
-           
-                    
-                    <div class="service-card">
-                        <div class="service-icon">📶</div>
-                        <h3>Build Networks / Boost WiFi</h3>
-                        <p>Nowadays our whole lives are going on online, from connecting with friends via social media...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('wifi-networks')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🔌</div>
-                        <h3>Cabling And Network Installation</h3>
-                        <p>Tech Pro Repair offers cabling installation and voice, video, and data network services for...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('cabling-network')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🌐</div>
-                        <h3>Website Design</h3>
-                        <p>Every serious company nowadays has a website. This is the first place people go to look you up...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('website-design')">Continue Reading</a>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">🔍</div>
-                        <h3>SEO Services</h3>
-                        <p>Statistically, only 5% of people actually go to the second page on Google while searching for...</p>
-                        <a href="#" class="continue-reading" onclick="showServiceDetail('seo-services')">Continue Reading</a>
+            <section class="services" id="our-services">
+                <div class="container">
+                    <h2>Our Services</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">🖥️</div>
+                            <h3>Computer Repair</h3>
+                            <p>Tech Pro Repair team provides the full range of PC repair services, including but not limited by...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('computer-repair')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🍎</div>
+                            <h3>Apple Repair</h3>
+                            <p>Our team of certified Technicians offers high quality repair service, fast and at a great price...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('apple-repair')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🦠</div>
+                            <h3>Virus Removal</h3>
+                            <p>The most common reason for a compromised work of a device is a virus/spyware...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('virus-removal')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🛠️</div>
+                            <h3>IT Support</h3>
+                            <p>Not a single business can exist without technology nowadays. And whether you are a law firm...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('it-support')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">⚡</div>
+                            <h3>Computer Hardware Upgrade</h3>
+                            <p>Technology changes and develops as fast as never before, and even the most advanced computer...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('hardware-upgrade')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">📱</div>
+                            <h3>iPhone Repair</h3>
+                            <p>Something happened to your iPhone? Tech Pro Repair got you covered! Just call us to schedule...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('iphone-repair')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">📲</div>
+                            <h3>Cellphone Repair</h3>
+                            <p>We repair all major cell phone brands like Samsung, HTC, ZTE, Asus, LG and many more...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('cellphone-repair')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">📺</div>
+                            <h3>iPad Repair</h3>
+                            <p>We provide all kinds of services for various models and generations of iPads out there...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('ipad-repair')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">💻</div>
+                            <h3>Tablet Repair</h3>
+                            <p>We provide solutions for all common issues with all major tablet brands. Whether it's hardware...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('tablet-repair')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">📶</div>
+                            <h3>Build Networks / Boost WiFi</h3>
+                            <p>Nowadays our whole lives are going on online, from connecting with friends via social media...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('wifi-networks')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🔌</div>
+                            <h3>Cabling And Network Installation</h3>
+                            <p>Tech Pro Repair offers cabling installation and voice, video, and data network services for...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('cabling-network')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🌐</div>
+                            <h3>Website Design</h3>
+                            <p>Every serious company nowadays has a website. This is the first place people go to look you up...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('website-design')">Continue Reading</a>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🔍</div>
+                            <h3>SEO Services</h3>
+                            <p>Statistically, only 5% of people actually go to the second page on Google while searching for...</p>
+                            <a href="#" class="continue-reading" onclick="showServiceDetail('seo-services')">Continue Reading</a>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
-
         <!-- About Page -->
         <div id="about" class="page">
             <section class="about">
@@ -228,15 +310,10 @@
                                     <option value="virus-removal">Virus Removal</option>
                                     <option value="it-support">IT Support</option>
                                     <option value="hardware-upgrade">Hardware Upgrade</option>
-                                    <option value="data-recovery">Data Recovery</option>
                                     <option value="iphone-repair">iPhone Repair</option>
                                     <option value="cellphone-repair">Cellphone Repair</option>
                                     <option value="ipad-repair">iPad Repair</option>
                                     <option value="tablet-repair">Tablet Repair</option>
-                                    
-                          
-                                    <option value="smart-home">Smart Home</option>
-                                    
                                     <option value="wifi-networks">WiFi/Networks</option>
                                     <option value="cabling-network">Cabling/Network</option>
                                     <option value="website-design">Website Design</option>
@@ -255,7 +332,7 @@
         </div>
 
         <!-- Service Detail Pages -->
-        <div id="computer-repair" class="page">
+      <div id="computer-repair" class="page">
             <section class="service-detail">
                 <button class="back-button" onclick="showPage('home')">← Back to Services</button>
                 <div class="service-detail-content">
@@ -583,6 +660,7 @@
         </div>
     </footer>
 
+    <script src="carousel.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

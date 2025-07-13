@@ -1,7 +1,4 @@
-// Enhanced Contact Form Integration with Backend API
-// Add this to your existing script.js file
 
-// Configuration
 const API_BASE_URL = 'http://localhost:3000'; // Change this to your production URL when deployed
 
 // Page navigation functionality (existing code)
@@ -287,7 +284,35 @@ function prefillContactForm(service) {
     }
     showPage('contact');
 }
+// Function to handle the smooth scroll
+function scrollToServices() {
+    // 1. Ensure the 'home' page is active (since services are on the home page)
+    showPage('home'); 
 
+    // 2. Get the target element by its ID
+    const servicesSection = document.getElementById('our-services');
+
+    if (servicesSection) {
+        // 3. Use the scrollIntoView method for smooth scrolling
+        servicesSection.scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+    }
+}
+
+// 4. Attach the click event listener to the "OUR SERVICES" link
+document.addEventListener('DOMContentLoaded', () => {
+    const servicesLink = document.getElementById('services-link');
+    
+    if (servicesLink) {
+        servicesLink.addEventListener('click', (event) => {
+            // Prevent the default anchor link behavior (which might cause a sudden jump)
+            event.preventDefault(); 
+            // Call the smooth scrolling function
+            scrollToServices();
+        });
+    }
+});
 // Add click handlers for service cards to prefill contact form
 document.addEventListener('DOMContentLoaded', function() {
     const serviceCards = document.querySelectorAll('.service-card');
