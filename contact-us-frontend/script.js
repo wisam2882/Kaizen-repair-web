@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'https://api.kaizenrepairs.com';
+const API_BASE_URL = 'https://kaizen-repair-web.onrender.com/';
 
 // Page navigation functionality (existing code)
 function showPage(pageId) {
