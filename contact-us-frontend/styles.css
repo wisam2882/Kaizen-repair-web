@@ -65,6 +65,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 60px; /* Increased from default - adjust as needed */
 }
 
 .logo-section {
@@ -449,6 +450,7 @@ main {
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    font-size: small;
 }
 
 .contact-item span {
@@ -705,5 +707,108 @@ footer {
 
     .contact-info-two .contact-item div {
         font-size: 13px;
+    }
+}
+
+
+
+/* Contact Info - Fixed Header Version */
+.contact-info {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    flex-shrink: 0; /* Don't shrink */
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: small;
+    flex-shrink: 0; /* Prevent shrinking */
+    min-width: 0; /* Allow text truncation if needed */
+    text-align: center; /* Keep centered alignment */
+}
+
+.contact-item h4 {
+    color: #2c3e50;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+    white-space: nowrap; /* Prevent text wrapping */
+    flex-shrink: 0;
+}
+
+.contact-item p {
+    color: #3498db;
+    font-weight: bold;
+    font-size: 1rem;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.contact-item span {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Contact Section - Page Content Version */
+.contact .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: small;
+    flex-shrink: 0;
+}
+
+.contact .contact-item span {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    min-width: 30px; /* Ensure consistent icon width */
+}
+
+.contact .contact-item div {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+    .contact-info {
+        flex-direction: row; /* Keep horizontal on mobile */
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+    
+    .contact-item {
+        flex-direction: column; /* Stack h4 and p vertically on mobile */
+        text-align: center;
+        gap: 0.25rem;
+    }
+    
+    .contact-item h4 {
+        font-size: 0.8rem;
+    }
+    
+    .contact-item p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-info {
+        gap: 10px;
+    }
+    
+    .contact-item h4 {
+        font-size: 0.7rem;
+    }
+    
+    .contact-item p {
+        font-size: 0.8rem;
     }
 }

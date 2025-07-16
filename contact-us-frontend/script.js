@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'http://localhost:3000'; // Change this to your production URL when deployed
+const API_BASE_URL = 'https://kaizen-repair-web.onrender.com';
 
 // Page navigation functionality (existing code)
 function showPage(pageId) {
