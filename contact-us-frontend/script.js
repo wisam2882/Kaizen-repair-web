@@ -1,33 +1,47 @@
-
 const API_BASE_URL = 'https://kaizen-repair-web.onrender.com';
 
-// Page navigation functionality (existing code)
-function showPage(pageId) {
-    // Hide all pages
+function showPage(pageId, pushToHistory = true) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('active'));
-    
-    // Show selected page
+
     const selectedPage = document.getElementById(pageId);
     if (selectedPage) {
         selectedPage.classList.add('active');
+        window.scrollTo(0, 0); // ✅ Scroll to top of page
     }
-    
-    // Update navigation
+
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => link.classList.remove('active'));
-    
+
     const activeLink = document.querySelector(`[data-page="${pageId}"]`);
     if (activeLink) {
         activeLink.classList.add('active');
     }
+
+    if (pushToHistory) {
+        history.pushState({ page: pageId }, '', `#${pageId}`);
+    }
+
+    if (pageId === 'home' && document.referrer.includes('#') && window.location.hash === '') {
+        setTimeout(() => {
+            const servicesSection = document.getElementById('our-services');
+            if (servicesSection) {
+                servicesSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100);
+    }
 }
+
+
+window.addEventListener('popstate', (event) => {
+    const pageId = (event.state && event.state.page) || 'home';
+    showPage(pageId, false);
+});
 
 function showServiceDetail(serviceId) {
-    showPage(serviceId);
+    showPage(serviceId, true);
 }
 
-// Enhanced Contact Form Handler
 class ContactFormHandler {
     constructor() {
         this.form = document.getElementById('contactForm');
@@ -46,8 +60,7 @@ class ContactFormHandler {
 
     async handleSubmit(e) {
         e.preventDefault();
-        
-        // Get form data
+
         const formData = new FormData(this.form);
         const data = {
             name: formData.get('name'),
@@ -57,16 +70,13 @@ class ContactFormHandler {
             message: formData.get('message')
         };
 
-        // Show loading state
         this.setLoadingState(true);
         this.clearMessages();
 
         try {
             const response = await fetch(`${API_BASE_URL}/contact`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
 
@@ -108,11 +118,8 @@ class ContactFormHandler {
             </div>
         `;
         this.form.insertBefore(messageDiv, this.form.firstChild);
-        
-        // Scroll to message
         messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
-        // Auto-hide after 5 seconds
+
         setTimeout(() => {
             messageDiv.style.opacity = '0';
             setTimeout(() => messageDiv.remove(), 300);
@@ -122,16 +129,12 @@ class ContactFormHandler {
     showError(message, details = null) {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'form-message error-message';
-        
+
         let detailsHtml = '';
         if (details && Array.isArray(details)) {
-            detailsHtml = `
-                <ul class="error-details">
-                    ${details.map(detail => `<li>${detail}</li>`).join('')}
-                </ul>
-            `;
+            detailsHtml = `<ul class="error-details">${details.map(d => `<li>${d}</li>`).join('')}</ul>`;
         }
-        
+
         messageDiv.innerHTML = `
             <div class="message-content">
                 <span class="message-icon">❌</span>
@@ -142,13 +145,10 @@ class ContactFormHandler {
             </div>
         `;
         this.form.insertBefore(messageDiv, this.form.firstChild);
-        
-        // Scroll to message
         messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
 
-// API Health Check
 async function checkApiHealth() {
     try {
         const response = await fetch(`${API_BASE_URL}/health`);
@@ -161,21 +161,18 @@ async function checkApiHealth() {
     }
 }
 
-// Form Validation Enhancement
 function enhanceFormValidation() {
     const form = document.getElementById('contactForm');
     if (!form) return;
 
     const inputs = form.querySelectorAll('input, textarea, select');
-    
+
     inputs.forEach(input => {
-        // Real-time validation
-        input.addEventListener('blur', function() {
+        input.addEventListener('blur', function () {
             validateField(this);
         });
-        
-        // Remove error styling when user starts typing
-        input.addEventListener('input', function() {
+
+        input.addEventListener('input', function () {
             this.classList.remove('error');
             const errorMsg = this.parentNode.querySelector('.field-error');
             if (errorMsg) {
@@ -190,14 +187,10 @@ function validateField(field) {
     let isValid = true;
     let errorMessage = '';
 
-    // Remove existing error
     field.classList.remove('error');
     const existingError = field.parentNode.querySelector('.field-error');
-    if (existingError) {
-        existingError.remove();
-    }
+    if (existingError) existingError.remove();
 
-    // Validation rules
     switch (field.name) {
         case 'name':
             if (value.length < 2) {
@@ -237,46 +230,15 @@ function validateField(field) {
     return isValid;
 }
 
-// Service Selection Helper
 function updateServiceFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const service = urlParams.get('service');
-    
     if (service) {
         const serviceSelect = document.getElementById('service');
-        if (serviceSelect) {
-            serviceSelect.value = service;
-        }
+        if (serviceSelect) serviceSelect.value = service;
     }
 }
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize contact form handler
-    new ContactFormHandler();
-    
-    // Enhance form validation
-    enhanceFormValidation();
-    
-    // Update service selection from URL
-    updateServiceFromURL();
-    
-    // Check API health (optional)
-    checkApiHealth();
-    
-    // Navigation event listeners
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const pageId = this.getAttribute('data-page');
-            showPage(pageId);
-        });
-    });
-    
-    console.log('🚀 Kaizen Repair website initialized successfully!');
-});
-
-// Utility function to prefill contact form
 function prefillContactForm(service) {
     const serviceSelect = document.getElementById('service');
     if (serviceSelect) {
@@ -284,52 +246,82 @@ function prefillContactForm(service) {
     }
     showPage('contact');
 }
-// Function to handle the smooth scroll
+
 function scrollToServices() {
-    // 1. Ensure the 'home' page is active (since services are on the home page)
-    showPage('home'); 
-
-    // 2. Get the target element by its ID
+    showPage('home');
     const servicesSection = document.getElementById('our-services');
-
     if (servicesSection) {
-        // 3. Use the scrollIntoView method for smooth scrolling
-        servicesSection.scrollIntoView({ 
-            behavior: 'smooth' 
-        });
+        servicesSection.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
-// 4. Attach the click event listener to the "OUR SERVICES" link
-document.addEventListener('DOMContentLoaded', () => {
-    const servicesLink = document.getElementById('services-link');
-    
-    if (servicesLink) {
-        servicesLink.addEventListener('click', (event) => {
-            // Prevent the default anchor link behavior (which might cause a sudden jump)
-            event.preventDefault(); 
-            // Call the smooth scrolling function
-            scrollToServices();
+document.addEventListener('DOMContentLoaded', function () {
+    new ContactFormHandler();
+    enhanceFormValidation();
+    updateServiceFromURL();
+    checkApiHealth();
+
+    // Nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const pageId = this.getAttribute('data-page');
+            showPage(pageId);
         });
-    }
-});
-// Add click handlers for service cards to prefill contact form
-document.addEventListener('DOMContentLoaded', function() {
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        const continueButton = card.querySelector('.continue-reading');
-        if (continueButton) {
-            // Add a secondary button for quick contact
+    });
+
+    // Service cards
+    document.querySelectorAll('.service-card').forEach(card => {
+        const serviceId = card.getAttribute('data-service');
+
+        // Make full card clickable
+        card.addEventListener('click', () => {
+            if (serviceId) {
+                showServiceDetail(serviceId);
+            }
+        });
+
+        // Remove any existing continue-reading links
+        const continueReading = card.querySelector('.continue-reading');
+        if (continueReading) {
+            continueReading.remove();
+        }
+
+        // Create Get Quote button if not exists
+        if (!card.querySelector('.quick-contact-btn')) {
             const contactButton = document.createElement('button');
-            contactButton.className = 'quick-contact-btn';
+            contactButton.className = 'cta-button quick-contact-btn  ';
             contactButton.textContent = 'Get Quote';
-            contactButton.onclick = function(e) {
+            contactButton.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 const serviceTitle = card.querySelector('h3').textContent;
                 prefillContactForm(serviceTitle.toLowerCase().replace(/\s+/g, '-'));
-            };
+            });
             card.appendChild(contactButton);
         }
+
+        // Prevent inner buttons from bubbling up
+        const links = card.querySelectorAll('a, button');
+        links.forEach(link => {
+            link.addEventListener('click', e => {
+                e.stopPropagation();
+                if (link.classList.contains('cta-button')) {
+                    e.preventDefault();
+                    showPage('contact');
+                }
+            });
+        });
     });
+
+    // Scroll to services from nav
+    const servicesLink = document.getElementById('services-link');
+    if (servicesLink) {
+        servicesLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            scrollToServices();
+        });
+    }
+
+    console.log('🚀 Kaizen Repair website initialized successfully!');
 });
