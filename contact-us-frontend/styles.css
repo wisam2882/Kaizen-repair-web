@@ -251,17 +251,16 @@ body {
 }
 
 .logo-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
-    border-radius: var(--radius-xl);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: 700;
-    box-shadow: var(--shadow-md);
+    max-width: 120px;  /* adjust this value to fit your layout */
+    height: auto;
+    overflow: hidden;
+}
+.logo-icon img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* or 'cover' if you want it to fill square space */
+    border-radius: 8px;  /* optional: adds rounded corners */
 }
 
 .logo-text {
