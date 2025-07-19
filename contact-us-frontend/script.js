@@ -1,13 +1,34 @@
 const API_BASE_URL = 'https://kaizen-repair-web.onrender.com';
 
-function showPage(pageId, pushToHistory = true) {
+// Store scroll positions for each page
+const scrollPositions = {};
+
+function showPage(pageId, pushToHistory = true, rememberScroll = true) {
+    // Store current scroll position before switching pages
+    if (rememberScroll) {
+        const currentPage = document.querySelector('.page.active');
+        if (currentPage) {
+            scrollPositions[currentPage.id] = window.scrollY;
+        }
+    }
+
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('active'));
 
     const selectedPage = document.getElementById(pageId);
     if (selectedPage) {
         selectedPage.classList.add('active');
-        window.scrollTo(0, 0); // ✅ Scroll to top of page
+        
+        // Restore scroll position or scroll to top for new pages
+        const savedPosition = scrollPositions[pageId];
+        if (savedPosition !== undefined && rememberScroll) {
+            // Use setTimeout to ensure the page is fully rendered before scrolling
+            setTimeout(() => {
+                window.scrollTo(0, savedPosition);
+            }, 50);
+        } else if (!rememberScroll) {
+            window.scrollTo(0, 0);
+        }
     }
 
     const navLinks = document.querySelectorAll('.nav-link');
@@ -32,14 +53,29 @@ function showPage(pageId, pushToHistory = true) {
     }
 }
 
+// Enhanced back button function that remembers scroll position
+function goBackToServices() {
+    showPage('home', true, true);
+    // Small delay to ensure page transition completes before scrolling to services
+    setTimeout(() => {
+        const servicesSection = document.getElementById('our-services');
+        if (servicesSection) {
+            servicesSection.scrollIntoView({ behavior: 'smooth' });
+            // Update the stored scroll position for home page
+            setTimeout(() => {
+                scrollPositions['home'] = window.scrollY;
+            }, 1000); // Wait for smooth scroll to complete
+        }
+    }, 100);
+}
 
 window.addEventListener('popstate', (event) => {
     const pageId = (event.state && event.state.page) || 'home';
-    showPage(pageId, false);
+    showPage(pageId, false, true);
 });
 
 function showServiceDetail(serviceId) {
-    showPage(serviceId, true);
+    showPage(serviceId, true, false); // Don't remember scroll for service details (start at top)
 }
 
 class ContactFormHandler {
@@ -244,15 +280,53 @@ function prefillContactForm(service) {
     if (serviceSelect) {
         serviceSelect.value = service;
     }
-    showPage('contact');
+    showPage('contact', true, false); // Start at top of contact page
 }
 
 function scrollToServices() {
-    showPage('home');
+    showPage('home', true, false); // Start at top, then scroll to services
     const servicesSection = document.getElementById('our-services');
     if (servicesSection) {
         servicesSection.scrollIntoView({ behavior: 'smooth' });
     }
+}
+
+// Function to setup all quote buttons (including service detail page ones)
+function setupQuoteButtons() {
+    // Handle all quote buttons (both service cards and service detail pages)
+    document.querySelectorAll('.quick-contact-btn, .service-detail-quote').forEach(button => {
+        // Remove existing listeners to avoid duplicates
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        newButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Try to determine the service from context
+            let serviceName = '';
+            
+            // If it's in a service detail page
+            const serviceDetailPage = this.closest('.page[id]');
+            if (serviceDetailPage && serviceDetailPage.id !== 'home' && serviceDetailPage.id !== 'about' && serviceDetailPage.id !== 'contact') {
+                serviceName = serviceDetailPage.id;
+            }
+            // If it's in a service card
+            else {
+                const serviceCard = this.closest('.service-card');
+                if (serviceCard) {
+                    serviceName = serviceCard.getAttribute('data-service');
+                }
+            }
+            
+            // Prefill and go to contact form
+            if (serviceName) {
+                prefillContactForm(serviceName);
+            } else {
+                showPage('contact', true, false);
+            }
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -266,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             const pageId = this.getAttribute('data-page');
-            showPage(pageId);
+            showPage(pageId, true, false); // Start at top for main nav
         });
     });
 
@@ -274,45 +348,27 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.service-card').forEach(card => {
         const serviceId = card.getAttribute('data-service');
 
-        // Make full card clickable
-        card.addEventListener('click', () => {
-            if (serviceId) {
-                showServiceDetail(serviceId);
+        // Make full card clickable (but not if clicking on buttons)
+        card.addEventListener('click', (e) => {
+            // Don't navigate if clicking on a button or link inside the card
+            if (!e.target.closest('button, a')) {
+                if (serviceId) {
+                    showServiceDetail(serviceId);
+                }
             }
         });
+    });
 
-        // Remove any existing continue-reading links
-        const continueReading = card.querySelector('.continue-reading');
-        if (continueReading) {
-            continueReading.remove();
-        }
-
-        // Create Get Quote button if not exists
-        if (!card.querySelector('.quick-contact-btn')) {
-            const contactButton = document.createElement('button');
-            contactButton.className = 'cta-button quick-contact-btn  ';
-            contactButton.textContent = 'Get Quote';
-            contactButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const serviceTitle = card.querySelector('h3').textContent;
-                prefillContactForm(serviceTitle.toLowerCase().replace(/\s+/g, '-'));
-            });
-            card.appendChild(contactButton);
-        }
-
-        // Prevent inner buttons from bubbling up
-        const links = card.querySelectorAll('a, button');
-        links.forEach(link => {
-            link.addEventListener('click', e => {
-                e.stopPropagation();
-                if (link.classList.contains('cta-button')) {
-                    e.preventDefault();
-                    showPage('contact');
-                }
-            });
+    // Setup back buttons with enhanced functionality
+    document.querySelectorAll('.back-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            goBackToServices();
         });
     });
+
+    // Setup all quote buttons
+    setupQuoteButtons();
 
     // Scroll to services from nav
     const servicesLink = document.getElementById('services-link');
@@ -321,6 +377,12 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             scrollToServices();
         });
+    }
+
+    // Handle initial page load from URL hash
+    const initialPage = window.location.hash.slice(1) || 'home';
+    if (initialPage !== 'home') {
+        showPage(initialPage, false, false);
     }
 
     console.log('🚀 Kaizen Repair website initialized successfully!');
