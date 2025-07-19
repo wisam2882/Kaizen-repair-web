@@ -728,6 +728,8 @@ main {
 }
 
 .contact-info-two {
+    order: 2; 
+    flex: 1;
     background: var(--gray-50);
     padding: var(--space-2xl);
     border-radius: var(--radius-2xl);
@@ -773,6 +775,8 @@ main {
 
 /* Contact Form */
 .contact-form {
+    order: 1; /* Moves "Send Us a Message" to the left */
+    flex: 1;
     background: var(--white);
     padding: var(--space-2xl);
     border-radius: var(--radius-2xl);
