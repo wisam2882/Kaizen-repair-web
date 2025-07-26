@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://kaizen-repair-web.onrender.com';
+const API_BASE_URL = 'http://localhost:3000';
 
 // Store scroll positions for each page
 const scrollPositions = {};
@@ -81,6 +81,8 @@ function showServiceDetail(serviceId) {
 class ContactFormHandler {
     constructor() {
         this.form = document.getElementById('contactForm');
+        this.formContainer = document.querySelector('.contact-form'); // Add this line
+        this.submissionScreen = document.getElementById('submissionScreen'); // Add this line
         this.submitButton = null;
         this.originalButtonText = '';
         this.init();
@@ -93,6 +95,14 @@ class ContactFormHandler {
             this.form.addEventListener('submit', this.handleSubmit.bind(this));
         }
     }
+    resetForm() {
+    // Hide submission screen
+    this.submissionScreen.classList.remove('active');
+    
+    setTimeout(() => {
+        this.formContainer.classList.remove('hidden');
+    }, 300);
+}
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -119,7 +129,7 @@ class ContactFormHandler {
             const result = await response.json();
 
             if (response.ok) {
-                this.showSuccess(result.message);
+                this.showSubmissionScreen(data);
                 this.form.reset();
             } else {
                 this.showError(result.error, result.details);
@@ -144,23 +154,21 @@ class ContactFormHandler {
         existingMessages.forEach(msg => msg.remove());
     }
 
-    showSuccess(message) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'form-message success-message';
-        messageDiv.innerHTML = `
-            <div class="message-content">
-                <span class="message-icon">✅</span>
-                <span class="message-text">${message}</span>
-            </div>
-        `;
-        this.form.insertBefore(messageDiv, this.form.firstChild);
-        messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+showSubmissionScreen(customerData) {
+    // Update customer info in submission screen
+    document.getElementById('customerName').textContent = `Hello, ${customerData.name}!`;
+    document.getElementById('customerEmail').textContent = `We'll contact you at: ${customerData.email}`;
 
-        setTimeout(() => {
-            messageDiv.style.opacity = '0';
-            setTimeout(() => messageDiv.remove(), 300);
-        }, 5000);
-    }
+    // Hide form and show submission screen
+    this.formContainer.classList.add('hidden');
+    
+    setTimeout(() => {
+        this.submissionScreen.classList.add('active');
+    }, 300);
+
+    // Reset form
+    this.form.reset();
+}
 
     showError(message, details = null) {
         const messageDiv = document.createElement('div');
@@ -293,9 +301,8 @@ function scrollToServices() {
 
 // Function to setup all quote buttons (including service detail page ones)
 function setupQuoteButtons() {
-    // Handle all quote buttons (both service cards and service detail pages)
-    document.querySelectorAll('.quick-contact-btn, .service-detail-quote').forEach(button => {
-        // Remove existing listeners to avoid duplicates
+    // Handle quote buttons (service detail page ones) - these go to contact
+    document.querySelectorAll('.service-detail-quote').forEach(button => {
         const newButton = button.cloneNode(true);
         button.parentNode.replaceChild(newButton, button);
         
@@ -303,23 +310,12 @@ function setupQuoteButtons() {
             e.preventDefault();
             e.stopPropagation();
             
-            // Try to determine the service from context
             let serviceName = '';
-            
-            // If it's in a service detail page
             const serviceDetailPage = this.closest('.page[id]');
             if (serviceDetailPage && serviceDetailPage.id !== 'home' && serviceDetailPage.id !== 'about' && serviceDetailPage.id !== 'contact') {
                 serviceName = serviceDetailPage.id;
             }
-            // If it's in a service card
-            else {
-                const serviceCard = this.closest('.service-card');
-                if (serviceCard) {
-                    serviceName = serviceCard.getAttribute('data-service');
-                }
-            }
             
-            // Prefill and go to contact form
             if (serviceName) {
                 prefillContactForm(serviceName);
             } else {
@@ -327,13 +323,38 @@ function setupQuoteButtons() {
             }
         });
     });
+
+    // Handle "Learn More" buttons from service cards - these go to service details
+    document.querySelectorAll('.service-card .quick-contact-btn').forEach(button => {
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        newButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const serviceCard = this.closest('.service-card');
+            if (serviceCard) {
+                const serviceName = serviceCard.getAttribute('data-service');
+                if (serviceName) {
+                    showServiceDetail(serviceName);
+                }
+            }
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    new ContactFormHandler();
+    window.contactHandler = new ContactFormHandler();
     enhanceFormValidation();
     updateServiceFromURL();
     checkApiHealth();
+
+
+    document.querySelector('.logo-section').addEventListener('click', function(e) {
+    e.preventDefault();
+    showPage('home', true, false);
+});
 
     // Nav links
     document.querySelectorAll('.nav-link').forEach(link => {
