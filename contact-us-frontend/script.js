@@ -1,4 +1,5 @@
 
+
 const API_BASE_URL = 'https://kaizen-repair-web.onrender.com';
 
 const scrollPositions = {};
@@ -343,18 +344,71 @@ function setupQuoteButtons() {
         });
     });
 }
+//footer buttons and links handling
+function handleFooterNavigation() {
+    // Footer navigation links
+    document.querySelectorAll('.footer-links a[onclick]').forEach(link => {
+        // Remove the onclick attribute and add event listener instead
+        const onclickValue = link.getAttribute('onclick');
+        link.removeAttribute('onclick');
+        
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Execute the original onclick function
+            if (onclickValue.includes('showPage')) {
+                const pageMatch = onclickValue.match(/showPage\('(\w+)'\)/);
+                if (pageMatch) {
+                    showPage(pageMatch[1], true, false);
+                }
+            } else if (onclickValue.includes('scrollToServices')) {
+                scrollToServices();
+            }
+        });
+    });
+}
 
+
+function setupAllNavigation() {
+    // Main nav links (existing code)
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const pageId = this.getAttribute('data-page');
+            showPage(pageId, true, false);
+        });
+    });
+    
+    // Footer navigation links
+    handleFooterNavigation();
+    
+    // Any other onclick navigation elements
+    document.querySelectorAll('a[onclick*="showPage"], button[onclick*="showPage"]').forEach(element => {
+        const onclickValue = element.getAttribute('onclick');
+        element.removeAttribute('onclick');
+        
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const pageMatch = onclickValue.match(/showPage\('(\w+)'\)/);
+            if (pageMatch) {
+                showPage(pageMatch[1], true, false);
+            }
+        });
+    });
+}
 document.addEventListener('DOMContentLoaded', function () {
     window.contactHandler = new ContactFormHandler();
     enhanceFormValidation();
     updateServiceFromURL();
     checkApiHealth();
 
-
     document.querySelector('.logo-section').addEventListener('click', function(e) {
-    e.preventDefault();
-    showPage('home', true, false);
-});
+        e.preventDefault();
+        showPage('home', true, false);
+    });
+
+    setupAllNavigation();
 
     // Nav links
     document.querySelectorAll('.nav-link').forEach(link => {
