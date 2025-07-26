@@ -8,28 +8,25 @@
 
 </head>
 <body>
-    <!-- Top Info Bar -->
+    <!-- Top Info Bar
     <div class="top-info">
         <div class="container">
             <div class="top-info-content">
-                <div class="address">
-                    <span>🏠</span>
-                    <span>3530 w willow ave</span>
-                </div>
                 <div class="social-links">
                     <a href="#" title="Facebook">📘</a>
                     <a href="#" title="Instagram">📷</a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Main Header -->
+    
     <header class="main-header">
         <div class="container">
             <div class="header-content">
                 <div class="logo-section">
-                    <div class="logo-icon">TP</div>
+                    <div class="logo-icon"><img src="images/logo.jpg"></div>
                     <div>
                         <div class="logo-text">KAIZEN REPAIR</div>
                         <div class="logo-tagline">Professional IT Service</div>
@@ -39,13 +36,15 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <h4>CONTACT US</h4>
-                        <p>(954) 367-5151</p>
+                        <p>(515) 412-8235</p>
                     </div>
                     <div class="contact-item">
-                        <h4>STORE HOURS</h4>
-                        <p>Mon - Fri: 10am - 6pm</p>
+                        <h4>BUISSNESS HOURS</h4>
+                        <p>Mon - Fri: 10am - 8pm</p>
                     </div>
-                    <a href="#" class="cta-button" onclick="showPage('contact')">GET STARTED NOW</a>
+                    <a href="#" class="cta-button" onclick="event.preventDefault(); showPage('contact')">GET STARTED NOW</a>
+
+                    
                 </div>
             </div>
         </div>
@@ -75,7 +74,7 @@
                         <div class="carousel-content">
                             <h1>Professional Computer Repair</h1>
                             <p>Expert diagnosis and repair services for all your computer needs</p>
-                            <a href="#" class="cta-button" onclick="showPage('contact')">Learn More</a>
+                            <a href="#" class="cta-button" onclick="event.preventDefault(); showPage('contact')">Learn More</a>
                         </div>
                     </div>
                     <div class="carousel-slide">
@@ -83,7 +82,7 @@
                         <div class="carousel-content">
                             <h1>Mobile Device Specialists</h1>
                             <p>iPhone, Android, and tablet repair services with same-day turnaround</p>
-                            <a href="#" class="cta-button" onclick="showPage('contact')">Get Estimate</a>
+                            <a href="#" class="cta-button" onclick="event.preventDefault(); showPage('contact')">Learn More</a>
                         </div>
                     </div>
                     <div class="carousel-slide">
@@ -91,7 +90,7 @@
                         <div class="carousel-content">
                             <h1>Network & IT Solutions</h1>
                             <p>Complete network setup, WiFi optimization, and IT support services</p>
-                            <a href="#" class="cta-button" onclick="showPage('contact')">Schedule Service</a>
+                            <a href="#" class="cta-button" onclick="event.preventDefault(); showPage('contact')">Learn More</a>
                         </div>
                     </div>
                     <div class="carousel-slide">
@@ -99,10 +98,10 @@
                         <div class="carousel-content">
                             <h1>Web Design & SEO</h1>
                             <p>Professional websites that rank high and convert visitors into customers</p>
-                            <a href="#" class="cta-button" onclick="showPage('contact')">Get Quote</a>
+                            <a href="#" class="cta-button" onclick="event.preventDefault(); showPage('contact')">Learn More</a>
                         </div>
                     </div>
-                </div>
+                </div>  
                 
                 <button class="carousel-arrow prev" onclick="previousSlide()">❮</button>
                 <button class="carousel-arrow next" onclick="nextSlide()">❯</button>
@@ -114,111 +113,95 @@
                     <div class="carousel-dot" onclick="currentSlide(3)"></div>
                 </div>
             </section>
+<section class="services" id="our-services">
+    <div class="container">
+        <h2>Our Services</h2>
+        <div class="services-grid">
 
-            <section class="services" id="our-services">
-                <div class="container">
-                    <h2>Our Services</h2>
-                    <div class="services-grid">
-                        <div class="service-card">
-                            <div class="service-icon">🖥️</div>
-                            <h3>Computer Repair</h3>
-                            <p>Tech Pro Repair team provides the full range of PC repair services, including but not limited by...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('computer-repair')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">🍎</div>
-                            <h3>Apple Repair</h3>
-                            <p>Our team of certified Technicians offers high quality repair service, fast and at a great price...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('apple-repair')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">🦠</div>
-                            <h3>Virus Removal</h3>
-                            <p>The most common reason for a compromised work of a device is a virus/spyware...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('virus-removal')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">🛠️</div>
-                            <h3>IT Support</h3>
-                            <p>Not a single business can exist without technology nowadays. And whether you are a law firm...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('it-support')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">⚡</div>
-                            <h3>Computer Hardware Upgrade</h3>
-                            <p>Technology changes and develops as fast as never before, and even the most advanced computer...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('hardware-upgrade')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">📱</div>
-                            <h3>iPhone Repair</h3>
-                            <p>Something happened to your iPhone? Tech Pro Repair got you covered! Just call us to schedule...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('iphone-repair')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">📲</div>
-                            <h3>Cellphone Repair</h3>
-                            <p>We repair all major cell phone brands like Samsung, HTC, ZTE, Asus, LG and many more...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('cellphone-repair')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">📺</div>
-                            <h3>iPad Repair</h3>
-                            <p>We provide all kinds of services for various models and generations of iPads out there...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('ipad-repair')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">💻</div>
-                            <h3>Tablet Repair</h3>
-                            <p>We provide solutions for all common issues with all major tablet brands. Whether it's hardware...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('tablet-repair')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">📶</div>
-                            <h3>Build Networks / Boost WiFi</h3>
-                            <p>Nowadays our whole lives are going on online, from connecting with friends via social media...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('wifi-networks')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">🔌</div>
-                            <h3>Cabling And Network Installation</h3>
-                            <p>Tech Pro Repair offers cabling installation and voice, video, and data network services for...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('cabling-network')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">🌐</div>
-                            <h3>Website Design</h3>
-                            <p>Every serious company nowadays has a website. This is the first place people go to look you up...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('website-design')">Continue Reading</a>
-                        </div>
-                        
-                        <div class="service-card">
-                            <div class="service-icon">🔍</div>
-                            <h3>SEO Services</h3>
-                            <p>Statistically, only 5% of people actually go to the second page on Google while searching for...</p>
-                            <a href="#" class="continue-reading" onclick="showServiceDetail('seo-services')">Continue Reading</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <div class="service-card" data-service="computer-repair">
+                <div class="service-icon">🖥️</div>
+                <h3>Computer Repair</h3>
+                <p>Kaizen Repair team provides the full range of PC & Laptop repair services, including but not limited by...</p>
+                 <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="apple-repair">
+                <div class="service-icon">🍎</div>
+                <h3>Apple Repair</h3>
+                <p>Our team of certified Technicians offers high quality repair service for all Apple Devices (laptop, computer, Ipad, Iphone, Tablet)</p>
+                <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="virus-removal">
+                <div class="service-icon">🦠</div>
+                <h3>Virus Removal</h3>
+                <p>The most common reason for a compromised work of a device is a virus/spyware...</p>
+                <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="it-support">
+                <div class="service-icon">🛠️</div>
+                <h3>IT Support</h3>
+                <p>Not a single business can exist without technology nowadays. And whether you are a law firm...</p>
+                 <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="hardware-upgrade">
+                <div class="service-icon">📱</div>
+                <h3>Smartphone Repair</h3>
+                <p>High quality repair service for all android devices, like samsung, Motorala etc...</p>
+                 <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="wifi-networks">
+                <div class="service-icon">📶</div>
+                <h3>Build Networks / Boost WiFi</h3>
+                <p>Nowadays our whole lives are going on online, from connecting with friends via social media...</p>
+                 <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="cabling-network">
+                <div class="service-icon">🔌</div>
+                <h3>Cabling And Network Installation</h3>
+                <p>Tech Pro Repair offers cabling installation and voice, video, and data network services for...</p>
+                 <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="website-design">
+                <div class="service-icon">🌐</div>
+                <h3>Website Design</h3>
+                <p>Every company has a website. This is the first place people go to look you up...</p>
+                 <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+            <div class="service-card" data-service="seo-services">
+                <div class="service-icon">🔍</div>
+                <h3>SEO Services</h3>
+                <p>Statistically, only 5% of people actually go to the second page on Google while searching for...</p>
+                 <a href="#" class="cta-button quick-contact-btn">Learn More</a>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
         </div>
         <!-- About Page -->
         <div id="about" class="page">
             <section class="about">
                 <div class="about-content">
                     <h2>About Kaizen Repair</h2>
-                    <p>TechPro Solutions is a leading IT services provider dedicated to helping businesses and individuals navigate the ever-evolving world of technology. With years of experience in the industry, we have built a reputation for delivering reliable, efficient, and cost-effective IT solutions.</p>
+                    <p>Kaizen Repair is a leading IT services provider dedicated to helping businesses and individuals navigate the ever-evolving world of technology. With years of experience in the industry, we have built a reputation for delivering reliable, efficient, and cost-effective IT solutions.</p>
                     
                     <p>Our team of certified technicians and IT professionals brings together extensive knowledge in computer systems, mobile devices, network infrastructure, and cybersecurity. We understand that technology is the backbone of modern business operations, and we're committed to ensuring your systems run smoothly and securely.</p>
                     
@@ -254,32 +237,17 @@
                     <div class="contact-info-two">
                         <h3>Get in Touch</h3>
                         <div class="contact-item">
-                            <span>📍</span>
-                            <div>
-                                <strong>Address:</strong><br>
-                                123 Tech Street<br>
-                                Phoenix, AZ 85001
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <span>📞</span>
-                            <div>
-                                <strong>Phone:</strong><br>
-                                (555) 123-4567
-                            </div>
-                        </div>
-                        <div class="contact-item">
                             <span>✉️</span>
                             <div>
-                                <strong>Email:</strong><br>
-                                info@techprosolutions.com
+                                <strong>Email: <a href="mailto:info@kaizenrepairs.com">info@kaizenrepairs.com</a></strong><br>
                             </div>
                         </div>
+
                         <div class="contact-item">
                             <span>🕒</span>
                             <div>
                                 <strong>Business Hours:</strong><br>
-                                Monday - Friday: 8:00 AM - 6:00 PM<br>
+                                Monday - Friday: 8:00 AM - 8:00 PM<br>
                                 Saturday: 9:00 AM - 4:00 PM<br>
                                 Sunday: Closed
                             </div>
@@ -313,7 +281,6 @@
                                     <option value="iphone-repair">iPhone Repair</option>
                                     <option value="cellphone-repair">Cellphone Repair</option>
                                     <option value="ipad-repair">iPad Repair</option>
-                                    <option value="tablet-repair">Tablet Repair</option>
                                     <option value="wifi-networks">WiFi/Networks</option>
                                     <option value="cabling-network">Cabling/Network</option>
                                     <option value="website-design">Website Design</option>
@@ -327,38 +294,59 @@
                             <button type="submit" class="submit-btn">Send Message</button>
                         </form>
                     </div>
+                    <div class="submission-screen" id="submissionScreen">
+                        <div class="success-icon"></div>
+                        <h2 class="submission-title">Message Sent Successfully!</h2>
+                        <p class="submission-message">
+                            Thank you for reaching out to us. We've received your message and will get back to you as soon as possible.
+                        </p>
+                        <div class="customer-info">
+                        <div class="customer-name" id="customerName"></div>
+                        <div class="customer-email" id="customerEmail"></div>
+                    </div>
+                    <button class="back-btn" onclick="contactHandler.resetForm()">Send Another Message</button>
+                </div>
                 </div>
             </section>
         </div>
 
         <!-- Service Detail Pages -->
-      <div id="computer-repair" class="page">
-            <section class="service-detail">
-                <!-- <button class="back-button" onclick="showPage('home')">← Back to Services</button> -->
-                <div class="service-detail-content">
-                    <h2>PC Repair</h2>
-                    <h3>Quick Fix | Free Diagnostic | Fast Return</h3>
-                    <p>Tech Pro Repair team provides the full range of Computer repair services, including but not limited by:</p>
-                    <ul>
-                        <li>malware and virus removal</li>
-                        <li>hardware upgrade and replacement</li>
-                        <li>new PC setup</li>
-                        <li>software upgrades</li>
-                        <li>water damages repair</li>
-                        <li>laptop and desktop repair</li>
-                        <li>computer tuneup</li>
-                        <li>fixing slow computers</li>
-                        <li>Windows upgrade</li>
-                        <li>data recovery and backup</li>
-                        <li>install Mac OS X on PC Windows computer</li>
-                    </ul>
-                </div>
-            </section>
+<!-- Service Detail Pages -->
+<div id="computer-repair" class="page">
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
         </div>
+        <div class="service-detail-content">
+            <h2>PC Repair</h2>
+            <h3>Quick Fix | Free Diagnostic | Fast Return</h3>
+            <p>Tech Pro Repair team provides the full range of Computer repair services, including but not limited by:</p>
+            <ul>
+                <li>malware and virus removal</li>
+                <li>hardware upgrade and replacement</li>
+                <li>new PC setup</li>
+                <li>software upgrades</li>
+                <li>water damages repair</li>
+                <li>laptop and desktop repair</li>
+                <li>computer tuneup</li>
+                <li>fixing slow computers</li>
+                <li>Windows upgrade</li>
+                <li>data recovery and backup</li>
+                <li>install Mac OS X on PC Windows computer</li>
+            </ul>
+        </div>
+    </section>
+</div>
 
         <div id="apple-repair" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>Apple Repair</h2>
                     <h3>Certified Technicians | Quality Service | Great Prices</h3>
@@ -381,8 +369,12 @@
         </div>
 
         <div id="virus-removal" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>Virus Removal</h2>
                     <h3>Complete Malware Protection | System Cleaning | Prevention</h3>
@@ -406,8 +398,12 @@
         </div>
 
         <div id="it-support" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>IT Support</h2>
                     <h3>Business Technology Solutions | 24/7 Support | Expert Consultation</h3>
@@ -430,23 +426,25 @@
         </div>
 
         <div id="hardware-upgrade" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+      <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
-                    <h2>Computer Hardware Upgrade</h2>
+                    <h2>SmartPhone repair</h2>
                     <h3>Performance Boost | Latest Components | Professional Installation</h3>
                     <p>Technology changes and develops as fast as never before, and even the most advanced computer becomes outdated quickly. Our hardware upgrade services include:</p>
                     <ul>
-                        <li>RAM memory upgrades</li>
-                        <li>SSD and hard drive upgrades</li>
-                        <li>Graphics card installation</li>
+                        <li>Battery replacement</li>
+                        <li>Screen replacement and repair</li>
                         <li>CPU processor upgrades</li>
                         <li>Motherboard replacement</li>
-                        <li>Power supply upgrades</li>
-                        <li>Cooling system improvements</li>
-                        <li>USB and port expansion</li>
-                        <li>Network card upgrades</li>
-                        <li>Custom build consultations</li>
+                        <li>Water damage repair</li>
+                        <li>Hard drive replacement and upgrade</li>
+                        <li>RAM upgrade</li>
+                        <li>Data Recovery</li>
                         <li>Performance optimization</li>
                     </ul>
                 </div>
@@ -455,8 +453,12 @@
 
 
         <div id="iphone-repair" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+                <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>iPhone Repair</h2>
                     <h3>Same Day Service | Quality Parts | Warranty Included</h3>
@@ -480,7 +482,11 @@
 
         <div id="cellphone-repair" class="page">
             <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>Cellphone Repair</h2>
                     <h3>All Brands | Fast Service | Quality Guarantee</h3>
@@ -503,8 +509,12 @@
         </div>
 
         <div id="ipad-repair" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+         <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>iPad Repair</h2>
                     <h3>All Models | Professional Service | Quick Turnaround</h3>
@@ -527,8 +537,12 @@
         </div>
 
         <div id="tablet-repair" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>Tablet Repair</h2>
                     <h3>All Major Brands | Hardware & Software | Expert Technicians</h3>
@@ -558,8 +572,12 @@
 
 
         <div id="wifi-networks" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+         <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>Build Networks / Boost WiFi</h2>
                     <h3>High-Speed Internet | Reliable Coverage | Network Optimization</h3>
@@ -582,8 +600,12 @@
         </div>
 
         <div id="cabling-network" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>Cabling And Network Installation</h2>
                     <h3>Professional Cabling | Structured Wiring | Voice/Data/Video</h3>
@@ -606,8 +628,12 @@
         </div>
 
         <div id="website-design" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>Website Design</h2>
                     <h3>Professional Design | Mobile Responsive | SEO Optimized</h3>
@@ -630,8 +656,12 @@
         </div>
 
         <div id="seo-services" class="page">
-            <section class="service-detail">
-                <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+    <section class="service-detail">
+        <div class="button-container">
+             <button class="back-button" onclick="showPage('home')">← Back to Services</button>
+            <a href="#" class="service-detail-quote quick-contact-btn">Get Quote</a>
+           
+        </div>
                 <div class="service-detail-content">
                     <h2>SEO Services</h2>
                     <h3>First Page Rankings | Local SEO | Traffic Growth</h3>
