@@ -1,9 +1,31 @@
-
-
 const API_BASE_URL = 'https://kaizen-repair-web.onrender.com';
 
 const scrollPositions = {};
 
+// Store scroll position whenever user scrolls
+let scrollTimeout;
+function storeCurrentScrollPosition() {
+    const currentPage = document.querySelector('.page.active');
+    if (currentPage) {
+        scrollPositions[currentPage.id] = window.scrollY;
+        
+        // Also store in browser history state
+        const currentState = history.state || {};
+        history.replaceState({
+            ...currentState,
+            page: currentPage.id,
+            scrollY: window.scrollY
+        }, '', window.location.href);
+    }
+}
+
+// Debounced scroll listener to store position
+window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(storeCurrentScrollPosition, 100);
+});
+
+// Enhanced showPage function with better scroll memory
 function showPage(pageId, pushToHistory = true, rememberScroll = true) {
     // Store current scroll position before switching pages
     if (rememberScroll) {
@@ -20,18 +42,23 @@ function showPage(pageId, pushToHistory = true, rememberScroll = true) {
     if (selectedPage) {
         selectedPage.classList.add('active');
         
-        // Restore scroll position or scroll to top for new pages
-        const savedPosition = scrollPositions[pageId];
-        if (savedPosition !== undefined && rememberScroll) {
-            // Use setTimeout to ensure the page is fully rendered before scrolling
-            setTimeout(() => {
-                window.scrollTo(0, savedPosition);
-            }, 50);
-        } else if (!rememberScroll) {
+        // Restore scroll position
+        if (rememberScroll) {
+            const savedPosition = scrollPositions[pageId];
+            if (savedPosition !== undefined) {
+                // Use requestAnimationFrame for smoother restoration
+                requestAnimationFrame(() => {
+                    window.scrollTo(0, savedPosition);
+                });
+            } else {
+                window.scrollTo(0, 0);
+            }
+        } else {
             window.scrollTo(0, 0);
         }
     }
 
+    // Update nav links
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => link.classList.remove('active'));
 
@@ -40,10 +67,15 @@ function showPage(pageId, pushToHistory = true, rememberScroll = true) {
         activeLink.classList.add('active');
     }
 
+    // Push to history with scroll position
     if (pushToHistory) {
-        history.pushState({ page: pageId }, '', `#${pageId}`);
+        history.pushState({ 
+            page: pageId, 
+            scrollY: rememberScroll ? (scrollPositions[pageId] || 0) : 0 
+        }, '', `#${pageId}`);
     }
 
+    // Special handling for home page services section
     if (pageId === 'home' && document.referrer.includes('#') && window.location.hash === '') {
         setTimeout(() => {
             const servicesSection = document.getElementById('our-services');
@@ -54,36 +86,154 @@ function showPage(pageId, pushToHistory = true, rememberScroll = true) {
     }
 }
 
-// Enhanced back button function that remembers scroll position
-function goBackToServices() {
-    showPage('home', true, true);
-    // Small delay to ensure page transition completes before scrolling to services
+// Enhanced back button handling with exact scroll restoration
+window.addEventListener('popstate', (event) => {
+    const pageId = (event.state && event.state.page) || 'home';
+    const savedScrollY = (event.state && event.state.scrollY) || scrollPositions[pageId] || 0;
+    
+    // Switch page without pushing to history
+    showPage(pageId, false, false);
+    
+    // Restore exact scroll position
     setTimeout(() => {
-        const servicesSection = document.getElementById('our-services');
-        if (servicesSection) {
-            servicesSection.scrollIntoView({ behavior: 'smooth' });
-            // Update the stored scroll position for home page
-            setTimeout(() => {
-                scrollPositions['home'] = window.scrollY;
-            }, 1000); // Wait for smooth scroll to complete
+        window.scrollTo(0, savedScrollY);
+        scrollPositions[pageId] = savedScrollY;
+    }, 50);
+});
+
+// Enhanced goBackToServices function that remembers where you were
+function goBackToServices() {
+    // Store current position before going back
+    storeCurrentScrollPosition();
+    
+    // Check if we came from home page and should return to services section
+    const wasOnHomePage = scrollPositions['home'] !== undefined;
+    
+    showPage('home', true, true);
+    
+    // If we were previously on home page, restore that position
+    // Otherwise, scroll to services section
+    setTimeout(() => {
+        if (wasOnHomePage && scrollPositions['home'] > 0) {
+            window.scrollTo(0, scrollPositions['home']);
+        } else {
+            const servicesSection = document.getElementById('our-services');
+            if (servicesSection) {
+                servicesSection.scrollIntoView({ behavior: 'smooth' });
+                // Update stored position after scrolling to services
+                setTimeout(() => {
+                    scrollPositions['home'] = window.scrollY;
+                    storeCurrentScrollPosition();
+                }, 1000);
+            }
         }
     }, 100);
 }
 
-window.addEventListener('popstate', (event) => {
-    const pageId = (event.state && event.state.page) || 'home';
-    showPage(pageId, false, true);
+// Store scroll position when user is about to leave the page
+window.addEventListener('beforeunload', storeCurrentScrollPosition);
+
+// Store position when clicking on navigation elements
+document.addEventListener('click', (e) => {
+    // If clicking on a navigation element, store current position first
+    if (e.target.closest('a[href^="#"], .nav-link, .service-card, .back-button') && 
+        !e.target.closest('.footer-links')) {
+        storeCurrentScrollPosition();
+    }
 });
+
+// Initialize scroll position memory on page load
+function initializeScrollMemory() {
+    const initialPage = window.location.hash.slice(1) || 'home';
+    scrollPositions[initialPage] = 0; // Initialize current page
+    
+    // Store initial state
+    history.replaceState({ 
+        page: initialPage, 
+        scrollY: 0 
+    }, '', window.location.href);
+}
 
 function showServiceDetail(serviceId) {
     showPage(serviceId, true, false); // Don't remember scroll for service details (start at top)
 }
 
+// UNIFIED NAVIGATION SETUP - Only one function to handle all navigation
+function setupAllNavigation() {
+    // 1. Main nav links with scroll memory
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            storeCurrentScrollPosition(); // Store before navigating
+            const pageId = this.getAttribute('data-page');
+            showPage(pageId, true, true); // Remember scroll for main nav
+        });
+    });
+    
+    // 2. Footer navigation links - fresh start (no scroll memory)
+    document.querySelectorAll('.footer-links a[onclick]').forEach(link => {
+        const onclickValue = link.getAttribute('onclick');
+        link.removeAttribute('onclick');
+        
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            storeCurrentScrollPosition(); // Store current position
+            
+            if (onclickValue.includes('showPage')) {
+                const pageMatch = onclickValue.match(/showPage\('(\w+)'\)/);
+                if (pageMatch) {
+                    showPage(pageMatch[1], true, false); // Don't remember scroll for footer nav
+                }
+            } else if (onclickValue.includes('scrollToServices')) {
+                scrollToServices();
+            }
+        });
+    });
+    
+    // 3. Service cards - remember scroll when navigating to details
+    document.querySelectorAll('.service-card').forEach(card => {
+        const serviceId = card.getAttribute('data-service');
+        card.addEventListener('click', (e) => {
+            if (!e.target.closest('button, a')) {
+                storeCurrentScrollPosition(); // Store before navigating
+                if (serviceId) {
+                    showServiceDetail(serviceId);
+                }
+            }
+        });
+    });
+    
+    // 4. Back buttons - enhanced to remember position
+    document.querySelectorAll('.back-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            goBackToServices();
+        });
+    });
+    
+    // 5. Any other onclick navigation elements
+    document.querySelectorAll('a[onclick*="showPage"]:not(.footer-links a), button[onclick*="showPage"]').forEach(element => {
+        const onclickValue = element.getAttribute('onclick');
+        element.removeAttribute('onclick');
+        
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            storeCurrentScrollPosition();
+            
+            const pageMatch = onclickValue.match(/showPage\('(\w+)'\)/);
+            if (pageMatch) {
+                showPage(pageMatch[1], true, true); // Remember scroll for other nav
+            }
+        });
+    });
+}
+
+// ContactFormHandler class (unchanged)
 class ContactFormHandler {
     constructor() {
         this.form = document.getElementById('contactForm');
-        this.formContainer = document.querySelector('.contact-form'); // Add this line
-        this.submissionScreen = document.getElementById('submissionScreen'); // Add this line
+        this.formContainer = document.querySelector('.contact-form');
+        this.submissionScreen = document.getElementById('submissionScreen');
         this.submitButton = null;
         this.originalButtonText = '';
         this.init();
@@ -96,14 +246,13 @@ class ContactFormHandler {
             this.form.addEventListener('submit', this.handleSubmit.bind(this));
         }
     }
+
     resetForm() {
-    // Hide submission screen
-    this.submissionScreen.classList.remove('active');
-    
-    setTimeout(() => {
-        this.formContainer.classList.remove('hidden');
-    }, 300);
-}
+        this.submissionScreen.classList.remove('active');
+        setTimeout(() => {
+            this.formContainer.classList.remove('hidden');
+        }, 300);
+    }
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -155,21 +304,18 @@ class ContactFormHandler {
         existingMessages.forEach(msg => msg.remove());
     }
 
-showSubmissionScreen(customerData) {
-    // Update customer info in submission screen
-    document.getElementById('customerName').textContent = `Hello, ${customerData.name}!`;
-    document.getElementById('customerEmail').textContent = `We'll contact you at: ${customerData.email}`;
+    showSubmissionScreen(customerData) {
+        document.getElementById('customerName').textContent = `Hello, ${customerData.name}!`;
+        document.getElementById('customerEmail').textContent = `We'll contact you at: ${customerData.email}`;
 
-    // Hide form and show submission screen
-    this.formContainer.classList.add('hidden');
-    
-    setTimeout(() => {
-        this.submissionScreen.classList.add('active');
-    }, 300);
+        this.formContainer.classList.add('hidden');
+        
+        setTimeout(() => {
+            this.submissionScreen.classList.add('active');
+        }, 300);
 
-    // Reset form
-    this.form.reset();
-}
+        this.form.reset();
+    }
 
     showError(message, details = null) {
         const messageDiv = document.createElement('div');
@@ -194,6 +340,7 @@ showSubmissionScreen(customerData) {
     }
 }
 
+// Utility functions (unchanged)
 async function checkApiHealth() {
     try {
         const response = await fetch(`${API_BASE_URL}/health`);
@@ -289,20 +436,20 @@ function prefillContactForm(service) {
     if (serviceSelect) {
         serviceSelect.value = service;
     }
-    showPage('contact', true, false); // Start at top of contact page
+    showPage('contact', true, false);
 }
 
 function scrollToServices() {
-    showPage('home', true, false); // Start at top, then scroll to services
-    const servicesSection = document.getElementById('our-services');
-    if (servicesSection) {
-        servicesSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    showPage('home', true, false);
+    setTimeout(() => {
+        const servicesSection = document.getElementById('our-services');
+        if (servicesSection) {
+            servicesSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, 100);
 }
 
-// Function to setup all quote buttons (including service detail page ones)
 function setupQuoteButtons() {
-    // Handle quote buttons (service detail page ones) - these go to contact
     document.querySelectorAll('.service-detail-quote').forEach(button => {
         const newButton = button.cloneNode(true);
         button.parentNode.replaceChild(newButton, button);
@@ -325,7 +472,6 @@ function setupQuoteButtons() {
         });
     });
 
-    // Handle "Learn More" buttons from service cards - these go to service details
     document.querySelectorAll('.service-card .quick-contact-btn').forEach(button => {
         const newButton = button.cloneNode(true);
         button.parentNode.replaceChild(newButton, button);
@@ -344,112 +490,36 @@ function setupQuoteButtons() {
         });
     });
 }
-//footer buttons and links handling
-function handleFooterNavigation() {
-    // Footer navigation links
-    document.querySelectorAll('.footer-links a[onclick]').forEach(link => {
-        // Remove the onclick attribute and add event listener instead
-        const onclickValue = link.getAttribute('onclick');
-        link.removeAttribute('onclick');
-        
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Execute the original onclick function
-            if (onclickValue.includes('showPage')) {
-                const pageMatch = onclickValue.match(/showPage\('(\w+)'\)/);
-                if (pageMatch) {
-                    showPage(pageMatch[1], true, false);
-                }
-            } else if (onclickValue.includes('scrollToServices')) {
-                scrollToServices();
-            }
-        });
-    });
-}
 
-
-function setupAllNavigation() {
-    // Main nav links (existing code)
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const pageId = this.getAttribute('data-page');
-            showPage(pageId, true, false);
-        });
-    });
-    
-    // Footer navigation links
-    handleFooterNavigation();
-    
-    // Any other onclick navigation elements
-    document.querySelectorAll('a[onclick*="showPage"], button[onclick*="showPage"]').forEach(element => {
-        const onclickValue = element.getAttribute('onclick');
-        element.removeAttribute('onclick');
-        
-        element.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const pageMatch = onclickValue.match(/showPage\('(\w+)'\)/);
-            if (pageMatch) {
-                showPage(pageMatch[1], true, false);
-            }
-        });
-    });
-}
+// MAIN INITIALIZATION
 document.addEventListener('DOMContentLoaded', function () {
     window.contactHandler = new ContactFormHandler();
     enhanceFormValidation();
     updateServiceFromURL();
     checkApiHealth();
 
+    // Initialize scroll memory system
+    initializeScrollMemory();
+
+    // Logo click
     document.querySelector('.logo-section').addEventListener('click', function(e) {
         e.preventDefault();
+        storeCurrentScrollPosition();
         showPage('home', true, false);
     });
 
+    // Setup ALL navigation (this replaces both setupScrollAwareNavigation and setupAllNavigation)
     setupAllNavigation();
 
-    // Nav links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const pageId = this.getAttribute('data-page');
-            showPage(pageId, true, false); // Start at top for main nav
-        });
-    });
-
-    // Service cards
-    document.querySelectorAll('.service-card').forEach(card => {
-        const serviceId = card.getAttribute('data-service');
-
-        // Make full card clickable (but not if clicking on buttons)
-        card.addEventListener('click', (e) => {
-            // Don't navigate if clicking on a button or link inside the card
-            if (!e.target.closest('button, a')) {
-                if (serviceId) {
-                    showServiceDetail(serviceId);
-                }
-            }
-        });
-    });
-
-    // Setup back buttons with enhanced functionality
-    document.querySelectorAll('.back-button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            goBackToServices();
-        });
-    });
-
-    // Setup all quote buttons
+    // Setup quote buttons
     setupQuoteButtons();
 
-    // Scroll to services from nav
+    // Services link from nav
     const servicesLink = document.getElementById('services-link');
     if (servicesLink) {
         servicesLink.addEventListener('click', (event) => {
             event.preventDefault();
+            storeCurrentScrollPosition();
             scrollToServices();
         });
     }
@@ -457,8 +527,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle initial page load from URL hash
     const initialPage = window.location.hash.slice(1) || 'home';
     if (initialPage !== 'home') {
-        showPage(initialPage, false, false);
+        showPage(initialPage, false, true);
     }
 
-    console.log('🚀 Kaizen Repair website initialized successfully!');
+    console.log('🚀 Kaizen Repair website with enhanced scroll memory initialized!');
 });
