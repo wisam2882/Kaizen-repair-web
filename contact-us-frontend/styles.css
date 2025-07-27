@@ -1511,7 +1511,7 @@ main {
         }
 
         /* Contact Info */
-        .contact-item {
+        .contact-item-2 {
             display: flex;
             align-items: flex-start;
             gap: 12px;
