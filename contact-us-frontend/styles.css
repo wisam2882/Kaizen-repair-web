@@ -8,6 +8,19 @@
 }
 
 :root {
+    /* dark mode */
+    --dark-bg-primary: #0f172a;
+    --dark-bg-secondary: #1e293b;
+     --dark-bg-tertiary: #334155;    
+     --dark-text-primary: #f8fafc;
+     --dark-text-secondary: #cbd5e1;
+     --dark-text-muted: #94a3b8;
+     --dark-border: #475569;
+     --dark-shadow: rgba(0, 0, 0, 0.3);
+     --dark-card-bg: #1e293b;
+     --dark-input-bg: #334155;
+
+
     /* Brand Colors */
     --primary-blue: #2563eb;
     --primary-blue-dark: #1d4ed8;
@@ -2024,4 +2037,438 @@ main {
     .services-page .process-steps {
         grid-template-columns: 1fr;
     }
+}
+
+
+
+/* ===== Dark mode ===== */
+ [data-theme="dark"] {
+            color-scheme: dark;
+        }
+
+        [data-theme="dark"] body {
+            background-color: var(--dark-bg-primary);
+            color: var(--dark-text-primary);
+        }
+
+        /* Header Dark Mode */
+        [data-theme="dark"] .top-info {
+            background: var(--dark-bg-secondary);
+            border-bottom-color: var(--dark-border);
+        }
+
+        [data-theme="dark"] .main-header {
+            background: var(--dark-bg-secondary);
+            box-shadow: 0 4px 6px var(--dark-shadow);
+        }
+
+        [data-theme="dark"] .logo-text {
+            color: var(--dark-text-primary);
+        }
+
+        [data-theme="dark"] .logo-tagline {
+            color: var(--dark-text-muted);
+        }
+
+        [data-theme="dark"] .contact-item h4 {
+            color: var(--dark-text-muted);
+        }
+
+        [data-theme="dark"] .contact-item p {
+            color: var(--primary-blue-light);
+        }
+
+        /* Navigation Dark Mode */
+        [data-theme="dark"] .navigation {
+            background: var(--dark-bg-secondary);
+            border-top-color: var(--dark-border);
+        }
+
+        [data-theme="dark"] .nav-link {
+            color: var(--dark-text-secondary);
+        }
+
+        [data-theme="dark"] .nav-link:hover,
+        [data-theme="dark"] .nav-link.active {
+            color: var(--primary-blue-light);
+            background: var(--dark-bg-tertiary);
+        }
+
+        /* Cards and Content Dark Mode */
+        [data-theme="dark"] .service-card,
+        [data-theme="dark"] .contact-form,
+        [data-theme="dark"] .contact-info-two,
+        [data-theme="dark"] .about,
+        [data-theme="dark"] .service-detail {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border);
+            box-shadow: 0 10px 15px var(--dark-shadow);
+        }
+
+        [data-theme="dark"] .service-card h3,
+        [data-theme="dark"] .contact-form h3,
+        [data-theme="dark"] .contact-info-two h3,
+        [data-theme="dark"] .about-content h2,
+        [data-theme="dark"] .service-detail-content h2 {
+            color: var(--dark-text-primary);
+        }
+
+        [data-theme="dark"] .service-card p,
+        [data-theme="dark"] .about-content p,
+        [data-theme="dark"] .service-detail-content p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Form Elements Dark Mode */
+        [data-theme="dark"] .form-group input,
+        [data-theme="dark"] .form-group select,
+        [data-theme="dark"] .form-group textarea {
+            background: var(--dark-input-bg);
+            border-color: var(--dark-border);
+            color: var(--dark-text-primary);
+        }
+
+        [data-theme="dark"] .form-group input:focus,
+        [data-theme="dark"] .form-group select:focus,
+        [data-theme="dark"] .form-group textarea:focus {
+            background: var(--dark-bg-tertiary);
+            border-color: var(--primary-blue-light);
+        }
+
+        [data-theme="dark"] .form-group label {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Value Items Dark Mode */
+        [data-theme="dark"] .value-item {
+            background: var(--dark-bg-tertiary);
+            border-color: var(--dark-border);
+        }
+
+        [data-theme="dark"] .value-item:hover {
+            background: var(--dark-card-bg);
+        }
+
+        [data-theme="dark"] .value-item h4 {
+            color: var(--primary-blue-light);
+        }
+
+        [data-theme="dark"] .value-item p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Services Grid Dark Mode */
+        [data-theme="dark"] .services {
+            background: var(--dark-bg-primary);
+        }
+
+        [data-theme="dark"] .services h2 {
+            color: var(--dark-text-primary);
+        }
+
+        /* Footer Dark Mode */
+        [data-theme="dark"] .site-footer {
+            background: linear-gradient(135deg, #0a0a1a 0%, #0f0f23 50%, #1a1a2e 100%);
+        }
+
+        /* Contact Section Dark Mode */
+        [data-theme="dark"] .contact {
+            background: var(--dark-bg-primary);
+        }
+
+        [data-theme="dark"] .contact h2 {
+            color: var(--dark-text-primary);
+        }
+
+        [data-theme="dark"] .contact-info-two .contact-item div {
+            color: var(--dark-text-secondary);
+        }
+
+        [data-theme="dark"] .contact-info-two .contact-item strong {
+            color: var(--dark-text-primary);
+        }
+
+        /* Service Detail Dark Mode */
+        [data-theme="dark"] .service-detail-content li {
+            background: var(--dark-bg-tertiary);
+            border-color: var(--dark-border);
+            color: var(--dark-text-secondary);
+        }
+
+        [data-theme="dark"] .service-detail-content li:hover {
+            background: var(--dark-card-bg);
+        }
+
+        /* Button Updates for Dark Mode */
+        [data-theme="dark"] .btn-outline {
+            color: var(--dark-text-secondary);
+            border-color: var(--dark-border);
+        }
+
+        [data-theme="dark"] .btn-outline:hover {
+            background: var(--dark-bg-tertiary);
+            color: var(--dark-text-primary);
+        }
+
+        [data-theme="dark"] .btn-ghost {
+            color: var(--dark-text-muted);
+        }
+
+        [data-theme="dark"] .btn-ghost:hover {
+            background: var(--dark-bg-tertiary);
+            color: var(--dark-text-primary);
+        }
+
+        /* Dark Mode Toggle Styles */
+        .theme-toggle {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: var(--white);
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-full);
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border);
+            color: var(--dark-text-primary);
+        }
+
+        /* Alternative: Header Toggle Style */
+        .header-theme-toggle {
+            background: transparent;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--gray-700);
+        }
+
+        .header-theme-toggle:hover {
+            background: var(--gray-100);
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        [data-theme="dark"] .header-theme-toggle {
+            border-color: var(--dark-border);
+            color: var(--dark-text-secondary);
+        }
+
+        [data-theme="dark"] .header-theme-toggle:hover {
+            background: var(--dark-bg-tertiary);
+            border-color: var(--primary-blue-light);
+            color: var(--primary-blue-light);
+        }
+
+        /* Smooth transitions for theme changes */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+
+
+/* Services Page Container */
+[data-theme="dark"] .services-page {
+    background: var(--dark-bg-primary);
+    color: var(--dark-text-primary);
+}
+
+/* Service Header */
+[data-theme="dark"] .service-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    /* Header gradient stays the same as it looks good in dark mode */
+}
+
+/* Main Content Container */
+[data-theme="dark"] .main-content {
+    background: var(--dark-card-bg);
+    border: 1px solid var(--dark-border);
+}
+
+/* Content Sections */
+[data-theme="dark"] .content-section {
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .section-title {
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .content-section p {
+    color: var(--dark-text-secondary) !important;
+}
+
+/* Service Items Grid */
+[data-theme="dark"] .service-item {
+    background: var(--dark-bg-tertiary);
+    border-left-color: var(--primary-blue-light);
+    border: 1px solid var(--dark-border);
+}
+
+[data-theme="dark"] .service-item:hover {
+    background: var(--dark-card-bg);
+}
+
+[data-theme="dark"] .service-item h4 {
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .service-item p {
+    color: var(--dark-text-secondary);
+}
+
+/* Process Steps */
+[data-theme="dark"] .process-step {
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .step-title {
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .step-description {
+    color: var(--dark-text-secondary);
+}
+
+[data-theme="dark"] .step-number {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+    /* Keep the blue gradient for visibility */
+}
+
+
+
+/* Info Cards */
+[data-theme="dark"] .info-card {
+    background: var(--dark-card-bg);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .info-card h3 {
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .info-card p {
+    color: var(--dark-text-secondary);
+}
+
+/* Highlight card keeps its green background but adjust text */
+[data-theme="dark"] .info-card.highlight {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%);
+    color: white;
+    border-color: var(--accent-green);
+}
+
+[data-theme="dark"] .info-card.highlight h3,
+[data-theme="dark"] .info-card.highlight p {
+    color: white;
+}
+
+/* Features List */
+[data-theme="dark"] .features-list {
+    background: var(--dark-card-bg);
+    border: 1px solid var(--dark-border);
+}
+
+[data-theme="dark"] .features-list h3 {
+    color: var(--dark-text-primary);
+}
+
+[data-theme="dark"] .feature-item {
+    color: var(--dark-text-secondary);
+}
+
+[data-theme="dark"] .feature-item:hover {
+    background: var(--dark-bg-tertiary);
+}
+
+[data-theme="dark"] .feature-item span {
+    color: var(--dark-text-secondary);
+}
+
+/* Feature Icons */
+[data-theme="dark"] .feature-icon {
+    background: var(--accent-green);
+    color: white;
+    /* Keep green background for visibility */
+}
+
+/* Back Button */
+[data-theme="dark"] .back-button {
+    background: var(--dark-bg-tertiary);
+    color: var(--dark-text-secondary);
+    border-color: var(--dark-border);
+}
+
+[data-theme="dark"] .back-button:hover {
+    background: var(--dark-card-bg);
+    color: var(--primary-blue-light);
+    border-color: var(--primary-blue-light);
+}
+
+
+
+/* Additional Button States for Service Pages */
+[data-theme="dark"] .btn-secondary {
+    background: var(--dark-bg-tertiary);
+    color: var(--dark-text-secondary);
+    border-color: var(--dark-border);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: var(--dark-card-bg);
+    color: var(--primary-blue-light);
+    border-color: var(--primary-blue-light);
+}
+
+/* Service Detail Quote Button in Dark Mode */
+[data-theme="dark"] .service-detail-quote {
+    /* Primary buttons maintain their blue gradient */
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+}
+
+[data-theme="dark"] .service-detail-quote:hover {
+    background: linear-gradient(135deg, var(--primary-blue-dark) 0%, #1e40af 100%);
+}
+
+
+/* Override any remaining light backgrounds */
+[data-theme="dark"] .services-page * {
+    border-color: var(--dark-border);
+}
+
+/* Specific fix for any white backgrounds that might remain */
+[data-theme="dark"] .services-page .main-content,
+[data-theme="dark"] .services-page .info-card:not(.highlight),
+[data-theme="dark"] .services-page .features-list {
+    background: var(--dark-card-bg) !important;
+}
+
+/* Fix for section backgrounds */
+[data-theme="dark"] .content-section {
+    background: transparent;
 }

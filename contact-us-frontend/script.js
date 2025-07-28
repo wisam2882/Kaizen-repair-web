@@ -532,3 +532,71 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log('🚀 Kaizen Repair website with enhanced scroll memory initialized!');
 });
+
+
+
+// Dark mode toggle
+ class ThemeManager {
+            constructor() {
+                this.theme = localStorage.getItem('theme') || 'light';
+                this.init();
+            }
+
+            init() {
+                // Set initial theme
+                document.documentElement.setAttribute('data-theme', this.theme);
+                this.updateToggleIcon();
+
+                // Add event listeners
+                const toggles = document.querySelectorAll('#themeToggle, #headerThemeToggle');
+                toggles.forEach(toggle => {
+                    toggle.addEventListener('click', () => this.toggleTheme());
+                });
+
+                // Listen for system theme changes
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem('theme')) {
+                        this.setTheme(e.matches ? 'dark' : 'light');
+                    }
+                });
+            }
+
+            toggleTheme() {
+                const newTheme = this.theme === 'light' ? 'dark' : 'light';
+                this.setTheme(newTheme);
+            }
+
+            setTheme(theme) {
+                this.theme = theme;
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                this.updateToggleIcon();
+
+                // Dispatch custom event for other scripts
+                window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+            }
+
+            updateToggleIcon() {
+                const icons = document.querySelectorAll('.theme-icon');
+                icons.forEach(icon => {
+                    icon.textContent = this.theme === 'light' ? '🌙' : '☀️';
+                });
+            }
+
+            getCurrentTheme() {
+                return this.theme;
+            }
+        }
+
+        // Initialize theme manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.themeManager = new ThemeManager();
+        });
+
+        // Optional: Auto-detect system preference on first visit
+        if (!localStorage.getItem('theme')) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                localStorage.setItem('theme', 'dark');
+            }
+        }
